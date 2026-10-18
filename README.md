@@ -12,21 +12,20 @@ Inspired by **Higgsfield Gentusu**, this project transforms real viral video act
    - Extracts direct CDN video & audio streams using `yt-dlp` and merges them via `ffmpeg`.
    - Bypasses Instagram's re-share watermarks to guarantee pure raw quality.
 
-2. **Automated 10-Second Segmenter**
-   - Automatically calculates total duration and performs frame-accurate splits into 10-second clips.
-   - Saves all output segments inside the `split/` directory (`part 1.mp4`, `part 2.mp4`, etc.).
+2. **Automated 8–10 Second Segmenter (`split_video.py`)**
+   - Automatically splits videos into chunks strictly between 8 and 10 seconds maximum as required by the `gemini-omni-1.1-flash` video editing constraints (<= 10 seconds).
+   - Saves all segments directly into the `split/` directory.
 
-3. **Multimodal Scene & Motion Analysis (Gemini Flash)**
-   - Extracts actor posture, head tilts, facial expressions, camera angles, lighting, and tool interactions.
-   - Formulates dense conditioning prompts for video synthesis.
+3. **Direct Video-to-Video Character Swap (`run_character_swap_test.py`)**
+   - Uses the official Google GenAI Interactions API (`client.interactions.create`) with `gemini-omni-1.1-flash`.
+   - Uploads target video clips and the reference character image (`main character/character.png`) via `client.files.upload()`.
+   - Polls file processing status until files reach the `ACTIVE` state.
+   - Performs direct video-to-video character replacement preserving motion, camera angles, lighting, and background.
+   - Saves the final output as `output_swapped_video.mp4`.
 
-4. **Character Swapping & Keyframe Synthesis (Gemini 2.5 Flash Image)**
-   - Takes reference portraits/full-body images of the custom character ([main character/character.png](main%20character/character.png)).
-   - Inpaints/replaces the main actor with the character in the exact pose, attire (double-breasted suit), and lighting.
-
-5. **Video-to-Video Animation (Google Veo 3.1)**
-   - Animates the character in fluid motion directly on Google Cloud Vertex AI (`veo-3.1-generate-001`).
-   - Automatically syncs and remuxes the original ambient audio, voice chatter, and tapping sound effects.
+4. **Simple API Key Authentication**
+   - Eliminates complex Vertex AI service account JSON setups.
+   - Uses standard `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) from `.env`.
 
 ---
 
