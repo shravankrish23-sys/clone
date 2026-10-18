@@ -1,0 +1,28 @@
+# Environment variables & secrets (NEVER COMMIT CREDENTIALS)
+.env
+service_account.json
+*.pem
+*.key
+
+# Video files (avoid video pushing as requested)
+*.mp4
+*.m4a
+*.webm
+*.mkv
+*.mov
+*.avi
+*.flv
+
+# Python caches
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+
+# System files
+.DS_Store
+Thumbs.db
